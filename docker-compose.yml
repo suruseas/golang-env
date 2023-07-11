@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./build/Dockerfile
+    tty: true
+    command: ash
+    volumes:
+      - .:/go/src/github.com/suruseas/golang-env
+    ports:
+      - 8080:8080
+    env_file:
+      - ./build/.go_env
+    environment:
+      - TZ=Asia/Tokyo

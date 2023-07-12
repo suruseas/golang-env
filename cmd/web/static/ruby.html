@@ -1,0 +1,31 @@
+<html>
+<script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@1.0.1/dist/browser.script.iife.js"></script>
+<script type="text/ruby">
+  require 'js'
+
+  document = JS.global[:document]
+
+  textarea = document.call(:getElementById, 'source')
+  btn = document.call(:getElementById, 'btn')
+  result = document.call(:getElementById, 'result')
+  # btn
+  btn.addEventListener("click") do
+    result[:style][:backgroundColor] = 'initial'
+    result[:innerText] = eval(textarea[:value].to_s)
+  end
+  # result
+  JS.eval(<<~JSCODE)
+    var result = document.getElementById('result');
+    result.addEventListener('click', function() {
+      result.style.backgroundColor = 'red';
+    });
+  JSCODE
+</script>
+
+<body>
+  <textarea id="source"></textarea>
+  <button id="btn">execute</button>
+  <div id="result""></div>
+</body>
+
+</html>
